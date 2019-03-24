@@ -126,7 +126,9 @@ Reference: https://www.lipsum.com/ (Ctrl + Click to open)
       }
 
       const handleInput = () => {
-        highlightsElement.innerHTML = applyHighlights(textAreaElement.value)
+        const textAreaText = textAreaElement.value;
+        localStorage.text = textAreaText;
+        highlightsElement.innerHTML = applyHighlights(textAreaText);
       }
 
       // Sync scroll 
@@ -157,6 +159,12 @@ Reference: https://www.lipsum.com/ (Ctrl + Click to open)
         textAreaElement.style["pointer-events"] = "none";
       }
 
+      const loadTextFromLocalStorage = () => {
+        if (localStorage.text !== undefined) {
+          textAreaElement.value = localStorage.text;
+        }
+      }
+
       // Set event
       document.onkeydown = (event) => { 
         if (event.key === "Control") setClickableMode();
@@ -172,6 +180,7 @@ Reference: https://www.lipsum.com/ (Ctrl + Click to open)
       textAreaElement.addEventListener('input', handleInput);
 
       // Init
+      loadTextFromLocalStorage();
       handleInput();
       setNormalMode();
     }
